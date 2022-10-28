@@ -1,4 +1,4 @@
-package edu.unl.raikes.Homework7;
+package edu.unl.raikes.homework7;
 
 /**
  * The possible states of a Connect 4 board.

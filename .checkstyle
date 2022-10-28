@@ -2,11 +2,11 @@
 
 <fileset-config file-format-version="1.2.0" simple-config="false" sync-formatter="false">
   <local-check-config name="RAIK-183H-StyleGuide" location="https://raw.githubusercontent.com/raik183h-master/RAIK-Style-Guide/main/raik-style.xml" type="remote" description="">
+    <additional-data name="cache-props-file-location" value="RAIK-183H-StyleGuide_1665429091234_cache.properties"/>
     <additional-data name="cache-file" value="true"/>
     <additional-data name="cache-file-location" value="RAIK-183H-StyleGuide_1665429091234_cache.xml"/>
-    <additional-data name="cache-props-file-location" value="RAIK-183H-StyleGuide_1665429091234_cache.properties"/>
   </local-check-config>
-  <fileset name="all" enabled="true" check-config-name="Google Checks" local="false">
+  <fileset name="all" enabled="false" check-config-name="Google Checks" local="false">
     <file-match-pattern match-pattern="." include-pattern="true"/>
   </fileset>
   <fileset name="RAIK-183H-StyleGuide" enabled="true" check-config-name="RAIK-183H-StyleGuide" local="true">

@@ -1,16 +1,18 @@
-package edu.unl.raikes.Homework7;
+package edu.unl.raikes.homework7;
+
+import java.util.Arrays;
 
 /**
  * Contains the logic for the game Connect 4.
  * 
- * @author Stephanie Valentine
  */
 public class Connect4 {
-    
+
     /**
      * A value representing the board's columns or the board's rows (it's a square board).
      */
     public static final int BOARD_SIZE = 6;
+
     
     /**
      * Initializes and returns a new gameboard with all cells set as EMPTY.
@@ -18,20 +20,25 @@ public class Connect4 {
      * @return a new gameboard with all cells set as EMPTY.
      */
     public static BoardState[][] initializeBoard() {
-        // TODO: YOUR LOGIC HERE
-        return null;
+
+        final BoardState EMPTY = BoardState.EMPTY; // Represents an empty board piece
+        BoardState[][] gameBoard = new BoardState[BOARD_SIZE][BOARD_SIZE]; 
+        // This is a truly empty board filled with null.
+
+        // This for loop fills each row and column up with empty spots.
+        for (int currentRow = 0; currentRow < BOARD_SIZE; currentRow++) {
+            Arrays.fill(gameBoard[currentRow], EMPTY);
+        }
+
+        return gameBoard;
     }
 
     /**
-     * Plays a piece in a given column. Returns true if successfully played, false
-     * if column is already full.
+     * Plays a piece in a given column. Returns true if successfully played, false if column is already full.
      * 
-     * @param board
-     *            the board on which to make the play
-     * @param column
-     *            the column in which to add the piece
-     * @param state
-     *            the player whose piece is being added
+     * @param board the board on which to make the play
+     * @param column the column in which to add the piece
+     * @param state the player whose piece is being added
      * @return true if successfully able to play a piece, false otherwise
      */
     public static boolean playAPiece(BoardState[][] board, int column, BoardState state) {
@@ -42,8 +49,7 @@ public class Connect4 {
     /**
      * Returns the column in which the computer will choose to play its next piece.
      * 
-     * @param board
-     *            the board on which the computer will play its next piece.
+     * @param board the board on which the computer will play its next piece.
      * @return
      */
     public static int getComputerColumnChoice(BoardState[][] board) {
@@ -52,13 +58,11 @@ public class Connect4 {
     }
 
     /**
-     * Checks whether the board is in a win state (4 in a row either horizontally or
-     * vertically) for that particular player.
+     * Checks whether the board is in a win state (4 in a row either horizontally or vertically) for that particular
+     * player.
      * 
-     * @param board
-     *            the board in which to check the state
-     * @param player
-     *            the player who just made a play
+     * @param board the board in which to check the state
+     * @param player the player who just made a play
      * @return true if the user has four in a row, false otherwise
      */
     public static boolean checkBoardForWinner(BoardState[][] board, BoardState player) {
@@ -69,8 +73,7 @@ public class Connect4 {
     /**
      * Prints a gameboard to the console.
      * 
-     * @param board
-     *            the board to print.
+     * @param board the board to print.
      */
     public static void printBoard(BoardState[][] board) {
         // TODO: YOUR LOGIC HERE
