@@ -14,6 +14,12 @@ public class Connect4Test {
     public void testEhhhh() {
         // Setup
 
+        BoardState[][] board = new BoardState[6][6];
+        board[3][2] = BoardState.USER;
+        board[5][5] = BoardState.COMPUTER;
+        
+        Connect4.printBoardBody(board);
+        
         // Execute
         // Test
     }

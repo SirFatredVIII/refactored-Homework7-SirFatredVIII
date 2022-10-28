@@ -76,7 +76,91 @@ public class Connect4 {
      * @param board the board to print.
      */
     public static void printBoard(BoardState[][] board) {
-        // TODO: YOUR LOGIC HERE
+
+        
+        
+    }
+    
+    /**
+     * Prints the game board's main body of tokens.
+     * 
+     * @param board the board to print a body of tokens from.
+     */
+    public static void printBoardBody(BoardState[][] board) {
+        
+        for (int currentRow = 0; currentRow < board.length; currentRow++) {
+            
+            final char VERT_BORDER = '|';
+            
+            char nextToken; // Finds the next token to print on the board
+            String margin = determineBodyMargin(); // Finds the appropriately sized margin.
+            
+            System.out.print(VERT_BORDER + margin);
+            
+            for (int currentCol = 0; currentCol < board[currentRow].length; currentCol++) {
+                
+                // This determines the next type of token to place on the board (player, computer, or empty)
+                nextToken = determinePlayer(board, currentRow, currentCol);
+                System.out.print(nextToken + margin);
+                
+            }
+            
+            System.out.println(VERT_BORDER);
+            
+        }
+        
+    }
+    
+    /**
+     * Finds the current enum of the game board, and returns a char representation of the player's token.
+     * 
+     * @param board The game board.
+     * @return a char representation of the character's piece.
+     */
+    public static char determinePlayer(BoardState[][] board, int row, int col) {
+        final BoardState USER = BoardState.USER; // Enum representation of a user token.
+        final char USER_TOKEN = '+'; // Char representation of a user token.
+        
+        final BoardState COMPUTER = BoardState.COMPUTER; // Enum representation of a computer token.
+        final char COM_TOKEN = 'X'; // Char representation of a computer token.
+
+        // Enum not necessary due to fall-through if-else statement. (If the piece isn't a user or computer, it's empty)
+        final char EMPTY_TOKEN = 'O'; // Char representation of an empty token.
+        
+        if (board[row][col] == USER) {
+            return USER_TOKEN;
+            
+        } else if (board[row][col] == COMPUTER) {
+            return COM_TOKEN;
+            
+        }
+        
+        return EMPTY_TOKEN;
+        
+    }
+    
+    /**
+     * Given the board's size (the field above the methods), finds the appropriate margin for tokens in the body.
+     * 
+     * @return the appropriately-sized margin.
+     */
+    public static String determineBodyMargin() {
+        
+        final int START_PLACE = 10;
+        final String START_MARGIN = " ";
+        
+        String margin = START_MARGIN; // Increases until the end is found.
+        int place = START_PLACE; // Increases to the next size place (10s, 100s) until the end is found.
+        int exponent = 1; // Grows to continue searching for number places.
+        
+        while (BOARD_SIZE >= place) {
+            exponent++;
+            margin += START_MARGIN;
+            place = (int) Math.pow(START_PLACE, exponent);
+        }
+        
+        return margin;
+        
     }
 
     /**
@@ -85,4 +169,9 @@ public class Connect4 {
     public static void main(String[] args) {
         // TODO: YOUR LOGIC HERE
     }
+    
+    
+    
+    
+    
 }
