@@ -1,6 +1,7 @@
 package edu.unl.raikes.homework7;
 
 import java.util.Arrays;
+import java.util.Random;
 
 /**
  * Contains the logic for the game Connect 4.
@@ -59,11 +60,15 @@ public class Connect4 {
      * Returns the column in which the computer will choose to play its next piece.
      * 
      * @param board the board on which the computer will play its next piece.
-     * @return
+     * @return the index of the column to play on
      */
     public static int getComputerColumnChoice(BoardState[][] board) {
-        // TODO: YOUR LOGIC HERE
-        return 0;
+
+        Random random = new Random();
+        
+        int computerChoice = random.nextInt(BOARD_SIZE); // Gets a random number between 0 and board's length
+        
+        return computerChoice;
     }
 
     /**
