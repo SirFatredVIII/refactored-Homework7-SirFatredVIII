@@ -19,14 +19,14 @@ public class Connect4 {
      * 
      * @return a new gameboard with all cells set as EMPTY.
      */
-    public static BoardState[][] initializeBoard() {
+    public static BoardState[][] initializeBoard(int boardSize) {
 
         final BoardState EMPTY = BoardState.EMPTY; // Represents an empty board piece
-        BoardState[][] gameBoard = new BoardState[BOARD_SIZE][BOARD_SIZE]; 
-        // This is a truly empty board filled with null.
+        BoardState[][] gameBoard = new BoardState[boardSize][boardSize]; 
+        // This is an empty board filled with null.
 
         // This for loop fills each row and column up with empty spots.
-        for (int currentRow = 0; currentRow < BOARD_SIZE; currentRow++) {
+        for (int currentRow = 0; currentRow < boardSize; currentRow++) {
             Arrays.fill(gameBoard[currentRow], EMPTY);
         }
 
@@ -42,7 +42,16 @@ public class Connect4 {
      * @return true if successfully able to play a piece, false otherwise
      */
     public static boolean playAPiece(BoardState[][] board, int column, BoardState state) {
-        // TODO: YOUR LOGIC HERE
+        
+        // This for loop checks for the first empty column, and places a piece there.
+        for (int currentRow = board.length - 1; currentRow >= 0; currentRow--) {
+            
+            if (board[currentRow][column] == BoardState.EMPTY) {
+                board[currentRow][column] = state;
+                return true;
+            }
+        }
+        
         return false;
     }
 
@@ -135,7 +144,6 @@ public class Connect4 {
         System.out.print(DASH); // Ending dash at the end of the line
         
     }
-    
     
     /**
      * Finds the current enum of the game board, and returns a char representation of the player's token.
