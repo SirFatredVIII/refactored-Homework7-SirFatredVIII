@@ -419,6 +419,5 @@ public class Connect4Test {
         assertEquals("Expected no win, but a win was detected", expectWin, actualWin);
         
     }
-    
-    
+
 }

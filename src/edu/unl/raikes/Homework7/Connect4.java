@@ -71,6 +71,7 @@ public class Connect4 {
         return computerChoice;
     }
 
+    
     /**
      * Checks whether the board is in a win state (4 in a row either horizontally or vertically) for that particular
      * player.
@@ -80,10 +81,122 @@ public class Connect4 {
      * @return true if the user has four in a row, false otherwise
      */
     public static boolean checkBoardForWinner(BoardState[][] board, BoardState player) {
-        // TODO: YOUR LOGIC HERE
+
+        for (int currentRow = 0; currentRow < board.length; currentRow++) {
+            if (checkBoardForHorizontalWins(board, player, currentRow)) {
+                return true;
+            }
+        }
+        
+        for (int currentCol = 0; currentCol < board.length; currentCol++) {
+            if (checkBoardForVerticalWins(board, player, currentCol)) {
+                return true;
+            }
+        }
+        
         return false;
     }
 
+    /**
+     * Checks the current row of the board to see if there are any horizontal wins.
+     * 
+     * @param board the board in which to check the state
+     * @param player the player who just made a play
+     * @param row the current row of the board checks
+     * @return true if the user has four in a row, false otherwise
+     */
+    public static boolean checkBoardForHorizontalWins(BoardState[][] board, BoardState player, int row) {
+        
+        final int TOKENS_NEEDED = 4; // The total tokens needed to win
+        
+        // This for loop looks for any of the player's tokens in the row
+        for (int currentCol = 0; currentCol < board.length; currentCol++) {
+            
+            int totalTokensFound = 0; // This keeps track of how many of the player's tokens were in a row
+            
+            // If a player's token is found, it enters this if statement
+            if (board[row][currentCol] == player) {
+                
+                totalTokensFound++; // A player token was found
+                
+                // This for loop loops ahead for up to three spaces ahead of the player's token found
+                for (int subsequentCol = 1; subsequentCol <= TOKENS_NEEDED - 1; subsequentCol++) {
+                    
+                    // If accessing the index ahead would result in an index error, it breaks this loop.
+                    if (subsequentCol + currentCol >= board.length) {
+                        return false;
+                    }
+                    
+                    // Increments total tokens found if another token is found to the right
+                    if (board[row][currentCol + subsequentCol] == player) {
+                        totalTokensFound++; 
+                        
+                    }
+                }
+            }
+            
+            // If four are found in a row, this lets the game know that the player won!
+            if (totalTokensFound == TOKENS_NEEDED) {
+                return true;
+            }
+            
+        }
+        return false;
+    }
+    
+    /**
+     * Checks the current column of the board to see if there are any vertical wins.
+     * 
+     * @param board the board in which to check the state
+     * @param player the player who just made a play
+     * @param col the current column of the board checks
+     * @return true if the user has four in a row, false otherwise
+     */
+    public static boolean checkBoardForVerticalWins(BoardState[][] board, BoardState player, int col) {
+        
+        final int TOKENS_NEEDED = 4; // The total tokens needed to win
+        
+        // This for loop looks for any of the player's tokens in the column
+        for (int currentRow = 0; currentRow < board.length; currentRow++) {
+            
+            int totalTokensFound = 0; // This keeps track of how many of the player's tokens were in a row
+            
+            // If a player's token is found, it enters this if statement
+            if (board[currentRow][col] == player) {
+                
+                totalTokensFound++; // A player token was found
+                
+                // This for loop loops ahead for up to three spaces ahead of the player's token found
+                for (int subsequentRow = 1; subsequentRow <= TOKENS_NEEDED - 1; subsequentRow++) {
+                    
+                    // If accessing the index ahead would result in an index error, it breaks this loop.
+                    if (subsequentRow + currentRow >= board.length) {
+                        return false;
+                        
+                    }
+                    
+                    // Increments total tokens found if another token is found below
+                    if (board[currentRow + subsequentRow][col] == player) {
+                        totalTokensFound++; 
+                        
+                    }
+                    
+                }
+                
+            }
+            
+            // If four are found in a row, this lets the game know that the player won!
+            if (totalTokensFound == TOKENS_NEEDED) {
+                return true;
+            }
+            
+        }
+        
+        return false;
+        
+    }
+    
+    
     /**
      * Prints a gameboard to the console.
      * 
