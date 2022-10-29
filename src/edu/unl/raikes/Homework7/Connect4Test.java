@@ -18,7 +18,7 @@ public class Connect4Test {
         board[3][2] = BoardState.USER;
         board[5][5] = BoardState.COMPUTER;
         
-        Connect4.printBoardBody(board);
+        Connect4.printBoard(board);
         
         // Execute
         // Test

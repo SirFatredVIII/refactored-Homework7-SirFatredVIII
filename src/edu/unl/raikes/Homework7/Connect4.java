@@ -77,7 +77,8 @@ public class Connect4 {
      */
     public static void printBoard(BoardState[][] board) {
 
-        
+        printBoardBody(board);
+        printBoardEnd(board);
         
     }
     
@@ -90,7 +91,7 @@ public class Connect4 {
         
         for (int currentRow = 0; currentRow < board.length; currentRow++) {
             
-            final char VERT_BORDER = '|';
+            final char VERT_BORDER = '|'; // Starts the wall on each row
             
             char nextToken; // Finds the next token to print on the board
             String margin = determineBodyMargin(); // Finds the appropriately sized margin.
@@ -105,11 +106,36 @@ public class Connect4 {
                 
             }
             
-            System.out.println(VERT_BORDER);
+            System.out.println(VERT_BORDER); // Finishes the wall after each row
             
         }
         
     }
+    
+    /**
+     * Prints the game board's final line of numbers.
+     * 
+     * @param board the board from which to print the final line.
+     */
+    public static void printBoardEnd(BoardState[][] board) {
+        
+        final char DASH = '-'; // Begins and ends the last line
+        String margin = ""; // Found at the start of every 
+        margin = determineBodyMargin();
+        
+        System.out.print(DASH + margin); // Beginning dash at the start of the line
+        
+        for (int currentCol = 1; currentCol <= BOARD_SIZE; currentCol++) {
+            
+            margin = determineEndMargin(currentCol); // Finds the margin of each number
+            System.out.print(currentCol + margin); 
+            
+        }
+        
+        System.out.print(DASH); // Ending dash at the end of the line
+        
+    }
+    
     
     /**
      * Finds the current enum of the game board, and returns a char representation of the player's token.
@@ -163,6 +189,47 @@ public class Connect4 {
         
     }
 
+    /**
+     * Given the board's size (the field above the methods), finds the appropriate margin for numbers at the bottom.
+     * 
+     * @return the appropriately-sized margin
+     */
+    public static String determineEndMargin(int currentCol) {
+        
+        final int START_PLACE = 10; // The starting place, finds digits between 1-9.
+        final String START_MARGIN = " "; // The starting margin, which prints adequate margins between 1-9 columns.
+        
+        boolean isMoreThanOneDigit = false; // Used to determine if a number should get different margins if it is large
+        
+        int place = START_PLACE; // Increases to the next size place (10s, 100s) until the end is found.
+        int exponent = 0; // Grows to continue searching for number places, and is used to shrink margin size.
+        
+        String margin = determineBodyMargin(); // Finds the starting margin
+        int marginSize = margin.length(); // Finds the size of the starting margin.
+        
+        // This determines how many places currentCol has.
+        while (currentCol >= place) {
+            isMoreThanOneDigit = true; 
+            exponent++;
+            place = (int) Math.pow(START_PLACE, exponent + 1);
+        }
+        
+        // This if statement is for numbers of currentCol that are bigger than 9.
+        if (isMoreThanOneDigit) {
+            margin = "";
+            
+            // This for loop shrinks the margin so that numbers fit within the space they are allotted.
+            for (int currentMargin = 0; currentMargin < marginSize - exponent; currentMargin++) {
+                margin += START_MARGIN;
+            }
+        }
+        
+        return margin;
+        
+        
+    }
+    
+    
     /**
      * Controls gameplay and logic.
      */
