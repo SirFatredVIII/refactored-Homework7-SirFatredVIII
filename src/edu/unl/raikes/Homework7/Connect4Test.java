@@ -9,15 +9,6 @@ import org.junit.Test;
  *
  */
 public class Connect4Test {
-
-    @Test
-    public void testBoardPrint() {
-
-        BoardState[][] board = new BoardState[6][6];
-        
-        Connect4.printBoard(board);
-        
-    }
     
     // These tests handle all testing for the method playAPiece
     @Test

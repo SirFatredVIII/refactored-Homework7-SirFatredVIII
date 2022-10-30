@@ -2,6 +2,7 @@ package edu.unl.raikes.homework7;
 
 import java.util.Arrays;
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  * Contains the logic for the game Connect 4.
@@ -34,6 +35,7 @@ public class Connect4 {
         return gameBoard;
     }
 
+    
     /**
      * Plays a piece in a given column. Returns true if successfully played, false if column is already full.
      * 
@@ -259,7 +261,7 @@ public class Connect4 {
             
         }
         
-        System.out.print(DASH); // Ending dash at the end of the line
+        System.out.println(DASH); // Ending dash at the end of the line
         
     }
     
@@ -355,12 +357,124 @@ public class Connect4 {
         
     }
     
+    /**
+     * Begins the game by offering the beginning information and by creating a gameboard.
+     * @return a game board 
+     */
+    public static BoardState[][] startGame() {
+        
+        BoardState[][] board = initializeBoard(BOARD_SIZE);
+        
+        System.out.println("Welcome to Connect 4! The objective of this game is to line up four "
+                + "\nof your tokens in a row! During each of your rounds, please select"
+                + "\nwhich of the columns you'd like to place your piece in!");
+        System.out.println("\n\nHere's the starting board:");
+        printBoard(board);
+        
+        return board;
+    }
+    
+    /**
+     * Runs the main functionality of the game.
+     * 
+     * @param board the game board to print and modify.
+     * @return the BoardState of USER/COMPUTER if either won, or EMPTY if neither have won yet.
+     */
+    public static BoardState runGame(BoardState[][] board, Scanner scnr) {
+        
+        BoardState player = BoardState.USER;
+        
+        System.out.print("Player turn! Please enter the number of the column you want to place your token: ");
+        
+        // Gets user input. If it's not in the range of the columns, validateInput gets a new value.
+        int columnToPlace = scnr.nextInt();
+        columnToPlace = validateInput(columnToPlace, scnr);
+        
+        // Plays the user's piece. If the piece cannot be played, it returns an error message (shown below)
+        if (!playAPiece(board, columnToPlace, player)) {
+            System.out.println();
+            System.out.println("You tried to play a piece in a full column (#" + (columnToPlace + 1)
+                    + ")! You forfeit your turn!");
+        }
+        
+        // Prints the next board
+        System.out.println("\nComputer turn!");
+        printBoard(board);
+        System.out.println();
+        
+        // If the piece that the user just placed was the last in a row or column of 4, then this returns the win
+        // state in favor of the user.
+        if (checkBoardForWinner(board, player)) {
+            return BoardState.USER;
+        }
+        
+        // Now it's the computer's turn.
+        player = BoardState.COMPUTER;
+        columnToPlace = getComputerColumnChoice(board);
+        
+        // Plays the computer's piece. If the piece cannot be played, it returns an error message (shown below)
+        if (!playAPiece(board, columnToPlace, player)) {
+            System.out.println();
+            System.out.println("Computer tried to play a piece in a full column (#" + (columnToPlace + 1)
+                    + ")! They forfeit their turn!");
+        }
+        
+        // Prints the next board
+        printBoard(board);
+        
+        // If the piece that the computer just placed was the last in a row or column of 4, then this returns the win
+        // state in favor of the computer.
+        if (checkBoardForWinner(board, player)) {
+            return BoardState.COMPUTER;
+            
+        }
+        
+        return BoardState.EMPTY; // Returns empty if no winner was found.
+    }
+    
+    /**
+     * Validates the input from user input.
+     * 
+     * @param inputToValidate The input to validate.
+     * @return new validated input
+     */
+    public static int validateInput(int inputToValidate, Scanner scnr) {
+        
+        int lowRange = 0;
+        int highRange = BOARD_SIZE;
+        int newInput = inputToValidate;
+        
+        while (newInput <= lowRange || newInput > highRange) {
+            System.out.print("That input could not be validated. Please enter another integer betwen " 
+                    + (lowRange + 1) + " and " + (highRange) + ": ");
+            newInput = scnr.nextInt();
+            System.out.println();
+        }
+        newInput--; 
+        // To account for readability, indexes of columns are displayed between 1-6. The real indexes are between 0-5.
+        return newInput;
+    }
+
     
     /**
      * Controls gameplay and logic.
      */
     public static void main(String[] args) {
-        // TODO: YOUR LOGIC HERE
+
+        Scanner scnr = new Scanner(System.in);
+        
+        BoardState[][] board = startGame(); // Gets a new board and runs the beginning text boxes
+        BoardState finishGame = BoardState.EMPTY; // Begins the game with no winner
+        
+        // While there is no winner, keep running the game.
+        while (finishGame == BoardState.EMPTY) {
+            finishGame = runGame(board, scnr);
+        }
+        
+        String winPlayer = finishGame.toString().toLowerCase();
+        
+        System.out.println("Congratulations, " + winPlayer + " wins!");
+        
     }
     
     
